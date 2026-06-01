@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo da Cobrinha</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🐍 Cobrinha</h1>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="label">Pontuação</span>
+        <span id="score">0</span>
+      </div>
+      <div class="stat">
+        <span class="label">Recorde</span>
+        <span id="high-score">0</span>
+      </div>
+    </div>
+
+    <div class="game-wrapper">
+      <canvas id="canvas" width="400" height="400"></canvas>
+
+      <div id="overlay-start" class="overlay">
+        <h2>Jogo da Cobrinha</h2>
+        <p>Use as setas ou WASD para mover</p>
+        <p class="hint">No celular: deslize na tela</p>
+        <button onclick="startGame()">Iniciar</button>
+      </div>
+
+      <div id="overlay-gameover" class="overlay hidden">
+        <h2>Game Over</h2>
+        <p>Pontuação: <strong id="final-score">0</strong></p>
+        <div class="btn-group">
+          <button onclick="startGame()">Jogar Novamente</button>
+          <button class="btn-share" onclick="shareScore()">Compartilhar 📤</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="history-panel">
+      <h3>Histórico de Partidas</h3>
+      <div id="history-list" class="history-list"></div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
