@@ -1,0 +1,43 @@
+name: projeto_001 (DevQuiz Arena)
+
+on:
+  push:
+    branches: [main]
+    paths: ['projeto_001/**', '.github/workflows/projeto_001.yml']
+  pull_request:
+    paths: ['projeto_001/**', '.github/workflows/projeto_001.yml']
+
+concurrency:
+  group: projeto_001-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: projeto_001
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: projeto_001/package.json
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: projeto_001/.nvmrc
+          cache: pnpm
+          cache-dependency-path: projeto_001/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: cp .env.example .env
+      - run: docker compose --env-file .env -f infra/docker-compose.yml build
