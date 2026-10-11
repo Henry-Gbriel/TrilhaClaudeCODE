@@ -1,0 +1,18 @@
+{$SITE_ADDRESS:localhost} {
+	encode zstd gzip
+
+	# Socket.IO (WebSocket incluso) e API HTTP do modo solo vão para o realtime.
+	@realtime path /socket.io/* /api/solo/* /api/me/* /api/questions/* /health
+	handle @realtime {
+		reverse_proxy realtime:4000
+	}
+
+	handle {
+		reverse_proxy web:3000
+	}
+
+	log {
+		output stdout
+		format json
+	}
+}
