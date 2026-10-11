@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+
+# pnpm 12 só roda scripts de install das dependências listadas aqui.
+allowBuilds:
+  esbuild: true
+  sharp: true
+  supabase: true
+  '@tailwindcss/oxide': true
+  unrs-resolver: true
