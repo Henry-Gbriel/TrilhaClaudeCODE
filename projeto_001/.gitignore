@@ -1,9 +1,35 @@
-node_modules/
-dist/
-.next/
-coverage/
-*.tsbuildinfo
-next-env.d.ts
+# Complementa o .gitignore da raiz do repositório com o que é específico do DevQuiz Arena.
+# Fica explícito aqui para o projeto continuar protegido se for extraído para um repositório próprio.
+
+# Segredos: o .env tem a SUPABASE_SECRET_KEY (ignora RLS).
 .env
 .env.*
 !.env.example
+*.pem
+
+# Dependências e builds
+node_modules/
+dist/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+.eslintcache
+
+# Testes (Vitest e Playwright a partir do M8)
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# Supabase CLI
+supabase/.temp/
+supabase/.branches/
+
+# Logs, SO e IDE
+*.log
+.DS_Store
+.idea/
+**/.vscode/*
+!**/.vscode/extensions.json
