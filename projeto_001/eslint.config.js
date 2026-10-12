@@ -16,6 +16,13 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      // Prefixo `_` marca variável descartada de propósito (ex.: omitir chave em desestruturação).
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true },
+      ],
+    },
   },
   {
     files: ['**/*.js'],

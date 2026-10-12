@@ -10,6 +10,9 @@
     "build": "echo \"@devquiz/game-engine: consumido como TS-fonte, sem build\"",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@devquiz/shared": "workspace:*"
   }
 }

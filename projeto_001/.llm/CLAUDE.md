@@ -6,7 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Projeto **DevQuiz Arena** (nome provisório): quiz competitivo em tempo real, de uso interno, sobre IA, ferramentas de workflow e programação. O PRD em `.llm/prd.md` é a **fonte de verdade**. Leia o PRD antes de cada marco e trabalhe **um marco por vez** (M0 → M8, seção 15 do PRD). Cada marco termina com testes passando e uma demo funcional.
 
-**M0 (fundação) concluído**: monorepo, apps e pacotes só têm placeholders (`/health`, home, testes smoke). Decisões já tomadas: Supabase **cloud** (o compose não inclui a stack do Supabase) e CI na raiz do repositório git.
+**M0 (fundação) e M1 (game engine) concluídos.** Apps web e realtime ainda são placeholders (`/health`, home). Decisões já tomadas: Supabase **cloud** (o compose não inclui a stack do Supabase) e CI na raiz do repositório git.
+
+`../projeto_000` é **somente leitura**: nunca edite, formate, mova ou commite nada nele.
 
 Este diretório faz parte do repositório de estudo `TrilhaClaudeCODE` (raiz em `..`); `../projeto_000` é um projeto anterior e independente (jogo da cobrinha).
 
@@ -47,6 +49,14 @@ Fluxo central: o front autentica via Supabase Auth (GitHub/Google) → envia o `
 - **Estado das salas em memória**, em uma única instância (até 20 jogadores por sala, cerca de 10 salas). Fica atrás de uma interface `RoomStore`, para que trocar por Redis no futuro seja simples. Perder partidas em andamento num restart é aceitável no MVP.
 - **Sala ao vivo**: `LOBBY → COUNTDOWN → QUESTION_OPEN → QUESTION_CLOSED → REVEAL → LEADERBOARD →` (loop) `→ PODIUM → FINISHED`; qualquer estado pode ir para `PAUSED` e voltar ao anterior.
 - **Modo solo**: `CONFIG → QUESTION → FEEDBACK → … → SUMMARY`, servido pela API HTTP (sem socket), usando a mesma engine.
+
+### game-engine (M1)
+
+As duas máquinas de estado são **reducers puros**: `liveReducer(state, event)` e `soloReducer(state, event)` devolvem `{ ok: true, state }` ou `{ ok: false, error }` com um código tipado (ex.: `DEADLINE_PASSED`, `ALREADY_ANSWERED`); nunca lançam erro por evento inválido. A engine **não lê relógio**: todo evento que depende de tempo traz `now` (ms), e o servidor passa o horário dele. É assim que o tempo de resposta fica medido no servidor. O servidor (M4/M7) decide quando disparar cada evento, por exemplo `CLOSE_QUESTION` no fim do timer ou quando `haveAllAnswered(state)` for verdadeiro.
+
+- `EngineQuestion` carrega `correct`, então o estado da engine **nunca** vai inteiro para o cliente; os payloads públicos (sem resposta) são montados no realtime.
+- Pontuação em `scoring.ts`, estatísticas em `player.ts`, desempate em `ranking.ts`, times em `teams.ts`, pódio e badges em `results.ts`. Os esclarecimentos de regra estão na seção 7 do PRD.
+- O teste da engine roda com cobertura (`vitest run --coverage`) e falha abaixo de 95% de linhas e 90% de branches.
 
 ## Regras invariantes
 

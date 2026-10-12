@@ -98,6 +98,17 @@ Cada pergunta tem categoria, tags, dificuldade (`facil` | `medio` | `dificil`) e
 - **Desempate**: mais acertos; persistindo o empate, menor tempo médio.
 - **Badges de fim de partida**: "Mais rápido", "Maior streak", "Especialista em IA/Workflow/Programação".
 
+**Esclarecimentos de implementação (M1, `packages/game-engine`)**
+- O multiplicador vale sobre o total da pergunta (pontos de velocidade + bônus de streak). No modo solo ele não se aplica, porque é uma opção do host.
+- `multi_select` parcial: recebe a fração dos pontos de velocidade, sem bônus, e **zera o streak**. Só a resposta exata conta como acerto (para streak, desempate e badges).
+- Modo solo sem timer: acerto vale 1000. Resposta depois do prazo (com timer) conta como não respondida.
+- Desempate por tempo: média das respostas enviadas. Quem não respondeu nada fica atrás. Empate total divide a posição ("1, 1, 3").
+- Times: distribuição automática em round-robin na ordem de entrada (tamanhos diferem em no máximo 1). No modo por escolha, quem entra sem escolher vai para o menor time. Desempate de times: média de acertos.
+- Badges: "Mais rápido" usa só o tempo das respostas **corretas**; cada badge vai para um jogador, e empate na métrica fica com quem está melhor no ranking. Sem acertos, não há badge.
+- Pausa: o tempo pausado não conta. Ao retomar, a abertura e o prazo da pergunta andam junto.
+- Jogador novo só entra no LOBBY (máx. 20). Reconexão é aceita em qualquer fase, com a pontuação preservada.
+- Encerrar no meio do jogo leva ao pódio com as perguntas já fechadas; uma pergunta aberta é descartada sem pontuar.
+
 ## 8. Requisitos funcionais
 
 ### Autenticação
