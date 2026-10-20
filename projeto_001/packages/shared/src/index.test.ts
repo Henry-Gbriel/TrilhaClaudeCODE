@@ -4,6 +4,7 @@ import {
   categorySchema,
   difficultySchema,
   liveSettingsSchema,
+  questionSchema,
   soloConfigSchema,
 } from './index.js';
 
@@ -60,5 +61,67 @@ describe('soloConfigSchema', () => {
       timeLimitSec: null,
     };
     expect(soloConfigSchema.safeParse(config).success).toBe(false);
+  });
+});
+
+describe('questionSchema', () => {
+  const base = {
+    slug: 'ia-001',
+    type: 'multiple_choice',
+    category: 'IA',
+    tags: ['rag'],
+    difficulty: 'medio',
+    prompt: 'O que é RAG?',
+    options: [
+      { id: 'a', text: 'Um modelo' },
+      { id: 'b', text: 'Busca + geração' },
+      { id: 'c', text: 'Um banco' },
+    ],
+    correct: ['b'],
+    explanation: 'RAG recupera contexto antes de gerar.',
+  };
+  const tf = {
+    ...base,
+    type: 'true_false',
+    options: [
+      { id: 'a', text: 'Verdadeiro' },
+      { id: 'b', text: 'Falso' },
+    ],
+  };
+
+  it('aceita perguntas válidas de cada tipo', () => {
+    expect(questionSchema.safeParse(base).success).toBe(true);
+    expect(questionSchema.safeParse(tf).success).toBe(true);
+    expect(
+      questionSchema.safeParse({ ...base, type: 'multi_select', correct: ['a', 'c'] }).success,
+    ).toBe(true);
+    expect(
+      questionSchema.safeParse({
+        ...base,
+        type: 'code_output',
+        code: 'print(1)',
+        codeLang: 'python',
+      }).success,
+    ).toBe(true);
+  });
+
+  it.each([
+    ['slug fora do padrão', { slug: 'IA_1' }],
+    ['resposta fora das alternativas', { correct: ['z'] }],
+    ['ids repetidos', { options: [base.options[0], base.options[0]] }],
+    ['resposta repetida', { type: 'multi_select', correct: ['a', 'a'] }],
+    ['multiple_choice com 2 corretas', { correct: ['a', 'b'] }],
+    ['multi_select com 1 correta', { type: 'multi_select', correct: ['a'] }],
+    [
+      'multi_select com 2 alternativas',
+      { type: 'multi_select', options: tf.options, correct: ['a', 'b'] },
+    ],
+    ['true_false com 3 alternativas', { type: 'true_false' }],
+    ['code_output sem código', { type: 'code_output' }],
+    ['codeLang sem code', { codeLang: 'python' }],
+    ['mais de 4 alternativas', { options: 'abcde'.split('').map((id) => ({ id, text: id })) }],
+    ['campo desconhecido', { status: 'published' }],
+  ])('rejeita %s', (_label, patch) => {
+    expect(questionSchema.safeParse({ ...base, ...patch }).success).toBe(false);
   });
 });

@@ -5,7 +5,16 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['**/dist/**', '**/coverage/**', 'apps/web/**', 'supabase/**'] },
+  {
+    ignores: [
+      '**/dist/**',
+      '**/coverage/**',
+      'apps/web/**',
+      'supabase/**',
+      // Gerado pelo `pnpm db:types`.
+      'packages/shared/src/database.types.ts',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   {

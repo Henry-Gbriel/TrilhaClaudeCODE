@@ -1,0 +1,346 @@
+[
+  {
+    "slug": "ia-001",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["llm"],
+    "difficulty": "facil",
+    "prompt": "O que significa a sigla **LLM**?",
+    "options": [
+      { "id": "a", "text": "Linear Learning Machine" },
+      { "id": "b", "text": "Large Language Model" },
+      { "id": "c", "text": "Low Latency Model" },
+      { "id": "d", "text": "Logical Language Module" }
+    ],
+    "correct": ["b"],
+    "explanation": "LLM é um Large Language Model: um modelo de linguagem treinado com grandes volumes de texto para prever o próximo token."
+  },
+  {
+    "slug": "ia-002",
+    "type": "true_false",
+    "category": "IA",
+    "tags": ["tokens", "llm"],
+    "difficulty": "facil",
+    "prompt": "Em LLMs, um token sempre corresponde a exatamente uma palavra.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["b"],
+    "explanation": "Um token pode ser uma palavra inteira, um pedaço de palavra, um sinal de pontuação ou um espaço. Palavras raras costumam virar vários tokens."
+  },
+  {
+    "slug": "ia-003",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["rag"],
+    "difficulty": "facil",
+    "prompt": "No **RAG** (Retrieval-Augmented Generation), o que acontece antes de o modelo gerar a resposta?",
+    "options": [
+      { "id": "a", "text": "O modelo é treinado de novo com os documentos da empresa" },
+      { "id": "b", "text": "A resposta é buscada em um cache de respostas anteriores" },
+      {
+        "id": "c",
+        "text": "Trechos de documentos relevantes são buscados e adicionados ao contexto"
+      },
+      { "id": "d", "text": "A temperatura é zerada para evitar erros" }
+    ],
+    "correct": ["c"],
+    "explanation": "No RAG, uma etapa de busca recupera trechos relevantes (geralmente por similaridade de embeddings) e os coloca no prompt, para o modelo responder com base neles."
+  },
+  {
+    "slug": "ia-004",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["embeddings"],
+    "difficulty": "facil",
+    "prompt": "O que é um **embedding**?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Um vetor de números que representa o significado de um texto, imagem ou outro dado"
+      },
+      { "id": "b", "text": "Um arquivo compactado com os pesos do modelo" },
+      { "id": "c", "text": "Uma instrução escondida no prompt" },
+      { "id": "d", "text": "O modo de executar o modelo dentro do navegador" }
+    ],
+    "correct": ["a"],
+    "explanation": "Embeddings são vetores em que itens com significado parecido ficam próximos. Eles são a base da busca semântica e do RAG."
+  },
+  {
+    "slug": "ia-005",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["prompt-engineering"],
+    "difficulty": "medio",
+    "prompt": "*Few-shot prompting* consiste em:",
+    "options": [
+      { "id": "a", "text": "Pedir ao modelo uma resposta com poucas palavras" },
+      { "id": "b", "text": "Treinar o modelo com um dataset pequeno" },
+      { "id": "c", "text": "Fazer várias chamadas em paralelo e escolher a melhor" },
+      { "id": "d", "text": "Incluir no prompt alguns exemplos de entrada e da saída esperada" }
+    ],
+    "correct": ["d"],
+    "explanation": "No few-shot, o prompt traz alguns exemplos resolvidos para o modelo imitar o formato e o raciocínio. Não há treino: tudo acontece no contexto."
+  },
+  {
+    "slug": "ia-006",
+    "type": "true_false",
+    "category": "IA",
+    "tags": ["temperatura", "llm"],
+    "difficulty": "medio",
+    "prompt": "Aumentar a **temperatura** na amostragem tende a deixar as respostas mais variadas e menos determinísticas.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["a"],
+    "explanation": "A temperatura achata a distribuição de probabilidade dos próximos tokens. Valores altos dão mais chance a tokens menos prováveis; valores perto de 0 deixam a saída quase determinística."
+  },
+  {
+    "slug": "ia-007",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["contexto", "tokens"],
+    "difficulty": "medio",
+    "prompt": "O que é a **janela de contexto** de um LLM?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A quantidade máxima de tokens que o modelo consegue considerar de uma vez"
+      },
+      { "id": "b", "text": "O tempo máximo que uma chamada pode levar" },
+      { "id": "c", "text": "O número de usuários que podem usar o modelo ao mesmo tempo" },
+      { "id": "d", "text": "O tamanho do dataset usado no treinamento" }
+    ],
+    "correct": ["a"],
+    "explanation": "A janela de contexto limita quantos tokens (prompt, histórico, documentos e resposta) cabem em uma chamada. O que passa disso precisa ser cortado ou resumido."
+  },
+  {
+    "slug": "ia-008",
+    "type": "multi_select",
+    "category": "IA",
+    "tags": ["rag", "embeddings"],
+    "difficulty": "medio",
+    "prompt": "Quais destes componentes costumam fazer parte de um pipeline de RAG?",
+    "options": [
+      { "id": "a", "text": "Divisão dos documentos em trechos (chunks)" },
+      { "id": "b", "text": "Geração de embeddings dos trechos" },
+      { "id": "c", "text": "Busca por similaridade em um índice vetorial" },
+      { "id": "d", "text": "Fine-tuning do modelo a cada pergunta recebida" }
+    ],
+    "correct": ["a", "b", "c"],
+    "explanation": "O RAG indexa os documentos (chunks + embeddings) e, a cada pergunta, busca os trechos mais similares. Ele não altera os pesos do modelo."
+  },
+  {
+    "slug": "ia-009",
+    "type": "code_output",
+    "category": "IA",
+    "tags": ["embeddings", "python"],
+    "difficulty": "medio",
+    "prompt": "Qual é a saída deste produto escalar entre dois embeddings?",
+    "code": "a = [1, 0]\nb = [0, 1]\ndot = sum(x * y for x, y in zip(a, b))\nprint(dot)",
+    "codeLang": "python",
+    "options": [
+      { "id": "a", "text": "1" },
+      { "id": "b", "text": "0" },
+      { "id": "c", "text": "2" },
+      { "id": "d", "text": "-1" }
+    ],
+    "correct": ["b"],
+    "explanation": "1*0 + 0*1 = 0. Vetores ortogonais têm produto escalar 0, ou seja, nenhuma similaridade de direção."
+  },
+  {
+    "slug": "ia-010",
+    "type": "multi_select",
+    "category": "IA",
+    "tags": ["agentes"],
+    "difficulty": "medio",
+    "prompt": "Quais destes são componentes típicos de um **agente** baseado em LLM?",
+    "options": [
+      { "id": "a", "text": "Um compilador que transforma o prompt em código de máquina" },
+      { "id": "b", "text": "O modelo de linguagem, que decide o próximo passo" },
+      {
+        "id": "c",
+        "text": "Ferramentas que ele pode chamar, como APIs, busca ou execução de código"
+      },
+      {
+        "id": "d",
+        "text": "Um loop que devolve o resultado das ferramentas para o contexto do modelo"
+      }
+    ],
+    "correct": ["b", "c", "d"],
+    "explanation": "Um agente é um loop: o modelo escolhe uma ação (tool call), o sistema a executa e devolve o resultado, e o modelo decide o próximo passo até concluir a tarefa."
+  },
+  {
+    "slug": "ia-011",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["avaliacao", "ml"],
+    "difficulty": "medio",
+    "prompt": "Em classificação, o que a métrica **precision** (precisão) mede?",
+    "options": [
+      { "id": "a", "text": "Dos positivos reais, quantos o modelo encontrou" },
+      {
+        "id": "b",
+        "text": "Dos itens que o modelo previu como positivos, quantos realmente são positivos"
+      },
+      { "id": "c", "text": "O percentual total de acertos, positivos e negativos" },
+      { "id": "d", "text": "A média harmônica entre duas outras métricas" }
+    ],
+    "correct": ["b"],
+    "explanation": "Precision = VP / (VP + FP). A alternativa A é o recall, a C é a accuracy e a D é o F1."
+  },
+  {
+    "slug": "ia-012",
+    "type": "code_output",
+    "category": "IA",
+    "tags": ["contexto", "tokens", "python"],
+    "difficulty": "medio",
+    "prompt": "Para caber no contexto, o histórico é truncado assim. Qual é a saída?",
+    "code": "tokens = [\"Olá\", \",\", \" mundo\", \"!\"]\nlimite = 3\nprint(tokens[-limite:])",
+    "codeLang": "python",
+    "options": [
+      { "id": "a", "text": "['Olá', ',', ' mundo']" },
+      { "id": "b", "text": "['!']" },
+      { "id": "c", "text": "['Olá', ',', ' mundo', '!']" },
+      { "id": "d", "text": "[',', ' mundo', '!']" }
+    ],
+    "correct": ["d"],
+    "explanation": "O fatiamento `[-3:]` pega os 3 últimos elementos. É o jeito comum de manter só o trecho mais recente do histórico."
+  },
+  {
+    "slug": "ia-013",
+    "type": "true_false",
+    "category": "IA",
+    "tags": ["alucinacao", "llm"],
+    "difficulty": "facil",
+    "prompt": "**Alucinação** é quando o modelo gera uma informação plausível, mas falsa ou sem fundamento.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["a"],
+    "explanation": "O modelo gera texto provável, não necessariamente verdadeiro. RAG com citação de fontes e validação das respostas ajudam a reduzir alucinações."
+  },
+  {
+    "slug": "ia-014",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["ml"],
+    "difficulty": "facil",
+    "prompt": "Qual destes é um exemplo de **aprendizado supervisionado**?",
+    "options": [
+      { "id": "a", "text": "Agrupar clientes parecidos sem nenhum rótulo (clustering)" },
+      { "id": "b", "text": "Reduzir a dimensionalidade dos dados com PCA" },
+      { "id": "c", "text": "Um agente que aprende a jogar recebendo recompensas" },
+      { "id": "d", "text": "Classificar e-mails como spam a partir de exemplos já rotulados" }
+    ],
+    "correct": ["d"],
+    "explanation": "Supervisionado = aprender a partir de pares entrada → rótulo. Clustering e PCA são não supervisionados; recompensas são aprendizado por reforço."
+  },
+  {
+    "slug": "ia-015",
+    "type": "multi_select",
+    "category": "IA",
+    "tags": ["prompt-injection", "seguranca", "agentes"],
+    "difficulty": "dificil",
+    "prompt": "Quais práticas ajudam a mitigar **prompt injection** em aplicações com LLM?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Tratar conteúdo externo (páginas, documentos, e-mails) como dado, não como instrução"
+      },
+      { "id": "b", "text": "Dar às ferramentas do agente só as permissões mínimas necessárias" },
+      { "id": "c", "text": "Confiar que um system prompt bem escrito impede qualquer ataque" },
+      { "id": "d", "text": "Exigir confirmação humana antes de ações sensíveis" }
+    ],
+    "correct": ["a", "b", "d"],
+    "explanation": "Nenhum prompt é garantia de defesa. O que funciona é limitar o estrago: separar dado de instrução, menor privilégio e humano no loop para ações críticas."
+  },
+  {
+    "slug": "ia-016",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["embeddings"],
+    "difficulty": "dificil",
+    "prompt": "Por que a **similaridade de cosseno** é comum para comparar embeddings?",
+    "options": [
+      { "id": "a", "text": "É a única métrica que funciona com números reais" },
+      { "id": "b", "text": "Considera só a direção dos vetores, não o comprimento" },
+      { "id": "c", "text": "É sempre mais rápida que o produto escalar" },
+      { "id": "d", "text": "Garante valores sempre entre 0 e 1" }
+    ],
+    "correct": ["b"],
+    "explanation": "O cosseno mede o ângulo entre os vetores, então dois textos com o mesmo sentido ficam próximos mesmo que os vetores tenham normas diferentes. O valor vai de -1 a 1."
+  },
+  {
+    "slug": "ia-017",
+    "type": "true_false",
+    "category": "IA",
+    "tags": ["fine-tuning", "rag"],
+    "difficulty": "dificil",
+    "prompt": "Fine-tuning costuma ser a melhor forma de fazer um LLM responder com base em documentos que mudam toda semana.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["b"],
+    "explanation": "Para conhecimento que muda com frequência, o RAG é mais barato e fica sempre atualizado. Fine-tuning é melhor para ensinar estilo, formato ou uma tarefa específica."
+  },
+  {
+    "slug": "ia-018",
+    "type": "code_output",
+    "category": "IA",
+    "tags": ["softmax", "python"],
+    "difficulty": "dificil",
+    "prompt": "Este código aplica softmax sobre logits. Qual é a saída?",
+    "code": "import math\n\nlogits = [2.0, 1.0, 0.1]\nexps = [math.exp(x) for x in logits]\nprobs = [e / sum(exps) for e in exps]\nprint(probs.index(max(probs)))",
+    "codeLang": "python",
+    "options": [
+      { "id": "a", "text": "0" },
+      { "id": "b", "text": "1" },
+      { "id": "c", "text": "2" },
+      { "id": "d", "text": "2.0" }
+    ],
+    "correct": ["a"],
+    "explanation": "O softmax preserva a ordem dos logits: o maior logit (2.0, no índice 0) vira a maior probabilidade. O código imprime o índice, não o valor."
+  },
+  {
+    "slug": "ia-019",
+    "type": "multiple_choice",
+    "category": "IA",
+    "tags": ["avaliacao", "llm"],
+    "difficulty": "dificil",
+    "prompt": "O que é **contaminação de dados** (data contamination) na avaliação de LLMs?",
+    "options": [
+      { "id": "a", "text": "Erros de rede que corrompem as respostas durante a avaliação" },
+      { "id": "b", "text": "Usuários enviarem dados pessoais nos prompts" },
+      {
+        "id": "c",
+        "text": "As perguntas do benchmark estarem nos dados de treino, inflando o resultado"
+      },
+      { "id": "d", "text": "O modelo gerar conteúdo tóxico nas respostas" }
+    ],
+    "correct": ["c"],
+    "explanation": "Se o modelo viu as questões (ou as respostas) no treino, ele pode acertar por memorização. Por isso se usam benchmarks novos ou conjuntos de teste privados."
+  },
+  {
+    "slug": "ia-020",
+    "type": "code_output",
+    "category": "IA",
+    "tags": ["prompt-engineering", "python"],
+    "difficulty": "facil",
+    "prompt": "Um template de prompt é preenchido assim. Qual é a saída?",
+    "code": "prompt = \"Resuma: {texto}\"\nprint(prompt.format(texto=\"RAG\"))",
+    "codeLang": "python",
+    "options": [
+      { "id": "a", "text": "Resuma: {texto}" },
+      { "id": "b", "text": "Resuma: texto" },
+      { "id": "c", "text": "Resuma: RAG" },
+      { "id": "d", "text": "KeyError: 'texto'" }
+    ],
+    "correct": ["c"],
+    "explanation": "`str.format` troca `{texto}` pelo argumento nomeado `texto`. O KeyError só aconteceria se o argumento não fosse passado."
+  }
+]

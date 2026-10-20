@@ -41,3 +41,24 @@ jobs:
       - uses: actions/checkout@v5
       - run: cp .env.example .env
       - run: docker compose --env-file .env -f infra/docker-compose.yml build
+
+  # Sobe só o Postgres do Supabase local: aplica migrações + seed, roda os testes pgTAP de RLS
+  # e falha se os tipos gerados estiverem desatualizados.
+  db:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: projeto_001/package.json
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: projeto_001/.nvmrc
+          cache: pnpm
+          cache-dependency-path: projeto_001/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec supabase db start
+      - run: pnpm db:test
+      - run: pnpm db:types
+      - name: Tipos gerados atualizados
+        run: git diff --exit-code -- packages/shared/src/database.types.ts

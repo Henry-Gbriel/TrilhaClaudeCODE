@@ -2,7 +2,7 @@
 
 Quiz competitivo em tempo real sobre IA, ferramentas de workflow e programação, para uso interno de times. Requisitos completos em [`.llm/prd.md`](.llm/prd.md).
 
-> Status: **M0 (fundação)** concluído. Apps e pacotes têm só a estrutura base; as regras de jogo começam no M1.
+> Status: **M0 (fundação)**, **M1 (game engine)** e **M2 (Supabase: schema, RLS, tipos e seed)** concluídos. As apps web e realtime ainda são placeholders.
 
 ## Stack
 
@@ -14,6 +14,7 @@ Monorepo **pnpm** com TypeScript estrito:
 | `apps/realtime`        | Fastify + Socket.IO (sala ao vivo) e API HTTP do modo solo |
 | `packages/shared`      | Tipos e schemas Zod do contrato de eventos e API           |
 | `packages/game-engine` | Regras de jogo como funções puras                          |
+| `packages/seed`        | Gerador do SQL de seed a partir dos JSON de perguntas      |
 | `supabase/`            | Config do Supabase CLI, migrações e seed                   |
 | `infra/`               | `docker-compose.yml` (web, realtime, caddy) e `Caddyfile`  |
 
@@ -44,12 +45,24 @@ pnpm exec supabase link --project-ref <project-ref>
 ```bash
 pnpm dev          # web em http://localhost:3000 e realtime em http://localhost:4000
 pnpm test         # todos os testes (Vitest)
-pnpm --filter @devquiz/game-engine test -- src/x.test.ts -t "nome"   # um teste só
+pnpm --filter @devquiz/game-engine exec vitest run src/x.test.ts -t "nome"   # um teste só
 pnpm lint
 pnpm typecheck
 pnpm format
 pnpm build
 ```
+
+## Banco local (Supabase CLI)
+
+```bash
+pnpm db:start                 # sobe o Supabase local (Docker) e aplica migrações + seed
+pnpm db:test                  # testes pgTAP de RLS
+pnpm db:seed:gen              # depois de editar supabase/seed/questions/*.json
+pnpm exec supabase db reset   # reaplica migrações + seed
+pnpm db:types                 # regenera packages/shared/src/database.types.ts
+```
+
+Para aplicar no projeto cloud linkado: `pnpm exec supabase db push --include-seed` (migrações + seed).
 
 ## Stack completa com Docker
 

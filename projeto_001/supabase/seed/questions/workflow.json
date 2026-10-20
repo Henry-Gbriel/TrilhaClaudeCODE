@@ -1,0 +1,352 @@
+[
+  {
+    "slug": "wf-001",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["git"],
+    "difficulty": "facil",
+    "prompt": "Qual comando cria um novo branch e já muda para ele?",
+    "options": [
+      { "id": "a", "text": "git branch -d nome" },
+      { "id": "b", "text": "git switch -c nome" },
+      { "id": "c", "text": "git merge nome" },
+      { "id": "d", "text": "git push nome" }
+    ],
+    "correct": ["b"],
+    "explanation": "`git switch -c nome` (ou o antigo `git checkout -b nome`) cria o branch e muda para ele. `git branch -d` apaga um branch."
+  },
+  {
+    "slug": "wf-002",
+    "type": "true_false",
+    "category": "WORKFLOW",
+    "tags": ["git"],
+    "difficulty": "facil",
+    "prompt": "Por padrão, `git pull` equivale a `git fetch` seguido da integração das mudanças remotas no branch atual.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["a"],
+    "explanation": "O `pull` baixa os commits (`fetch`) e os integra ao branch atual, com merge por padrão ou rebase se configurado (`pull.rebase`)."
+  },
+  {
+    "slug": "wf-003",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["docker"],
+    "difficulty": "facil",
+    "prompt": "Qual é a diferença entre **imagem** e **contêiner** no Docker?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A imagem é o modelo imutável; o contêiner é uma instância em execução dela"
+      },
+      { "id": "b", "text": "São sinônimos" },
+      { "id": "c", "text": "O contêiner é o arquivo Dockerfile; a imagem é o processo" },
+      { "id": "d", "text": "A imagem só existe no Docker Hub; o contêiner só existe localmente" }
+    ],
+    "correct": ["a"],
+    "explanation": "Uma imagem é um conjunto de camadas somente leitura. Cada `docker run` cria um contêiner a partir dela, com uma camada gravável própria."
+  },
+  {
+    "slug": "wf-004",
+    "type": "multi_select",
+    "category": "WORKFLOW",
+    "tags": ["linux", "shell"],
+    "difficulty": "facil",
+    "prompt": "Quais destes comandos mostram o conteúdo de um arquivo de texto no terminal?",
+    "options": [
+      { "id": "a", "text": "cat" },
+      { "id": "b", "text": "less" },
+      { "id": "c", "text": "mkdir" },
+      { "id": "d", "text": "head" }
+    ],
+    "correct": ["a", "b", "d"],
+    "explanation": "`cat` imprime o arquivo inteiro, `less` abre um paginador e `head` mostra as primeiras linhas. `mkdir` cria diretórios."
+  },
+  {
+    "slug": "wf-005",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["ci-cd"],
+    "difficulty": "facil",
+    "prompt": "O que é **Integração Contínua** (CI)?",
+    "options": [
+      { "id": "a", "text": "Fazer deploy manual em produção uma vez por mês" },
+      { "id": "b", "text": "Manter dois bancos de dados sincronizados" },
+      { "id": "c", "text": "Revisar todo o código só no fim do projeto" },
+      {
+        "id": "d",
+        "text": "Integrar mudanças ao repositório com frequência, com build e testes automáticos a cada envio"
+      }
+    ],
+    "correct": ["d"],
+    "explanation": "Na CI, cada push ou PR dispara build e testes automaticamente, para detectar problemas de integração cedo. O deploy automático é a parte de CD."
+  },
+  {
+    "slug": "wf-006",
+    "type": "true_false",
+    "category": "WORKFLOW",
+    "tags": ["docker"],
+    "difficulty": "facil",
+    "prompt": "Dados gravados no sistema de arquivos de um contêiner, sem volume, são perdidos quando o contêiner é removido.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["a"],
+    "explanation": "A camada gravável pertence ao contêiner e some com o `docker rm`. Para persistir dados, use volumes ou bind mounts."
+  },
+  {
+    "slug": "wf-007",
+    "type": "code_output",
+    "category": "WORKFLOW",
+    "tags": ["shell", "linux"],
+    "difficulty": "medio",
+    "prompt": "Qual é a saída deste comando?",
+    "code": "echo \"a b c\" | wc -w",
+    "codeLang": "bash",
+    "options": [
+      { "id": "a", "text": "1" },
+      { "id": "b", "text": "3" },
+      { "id": "c", "text": "5" },
+      { "id": "d", "text": "a b c" }
+    ],
+    "correct": ["b"],
+    "explanation": "O pipe manda a saída do `echo` para o `wc -w`, que conta palavras: `a`, `b` e `c`."
+  },
+  {
+    "slug": "wf-008",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["git"],
+    "difficulty": "medio",
+    "prompt": "Qual é a principal diferença entre `git merge` e `git rebase` ao integrar um branch?",
+    "options": [
+      { "id": "a", "text": "Nenhuma: os dois produzem exatamente o mesmo histórico" },
+      { "id": "b", "text": "O merge apaga o branch de origem; o rebase o mantém" },
+      {
+        "id": "c",
+        "text": "O rebase reaplica os commits sobre a nova base, deixando o histórico linear; o merge preserva o histórico com um commit de merge"
+      },
+      { "id": "d", "text": "O rebase só funciona em repositórios remotos" }
+    ],
+    "correct": ["c"],
+    "explanation": "O rebase reescreve os commits (novos hashes), por isso não se faz rebase de commits já compartilhados. O merge não reescreve nada."
+  },
+  {
+    "slug": "wf-009",
+    "type": "multi_select",
+    "category": "WORKFLOW",
+    "tags": ["docker"],
+    "difficulty": "medio",
+    "prompt": "Quais práticas reduzem o tamanho de uma imagem Docker?",
+    "options": [
+      { "id": "a", "text": "Instalar ferramentas de debug na imagem final" },
+      {
+        "id": "b",
+        "text": "Multi-stage build, copiando só os artefatos finais para a última etapa"
+      },
+      { "id": "c", "text": "Usar uma imagem base enxuta, como as variantes `-slim` ou `alpine`" },
+      { "id": "d", "text": "Usar `.dockerignore` para não copiar arquivos desnecessários" }
+    ],
+    "correct": ["b", "c", "d"],
+    "explanation": "Multi-stage deixa compiladores e dependências de build para trás, a base enxuta tem menos pacotes e o `.dockerignore` evita que `COPY .` leve lixo (node_modules, .git) para a imagem."
+  },
+  {
+    "slug": "wf-010",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["airflow"],
+    "difficulty": "medio",
+    "prompt": "No Apache Airflow, o que é um **DAG**?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Um grafo acíclico dirigido que define as tarefas e as dependências entre elas"
+      },
+      { "id": "b", "text": "O banco de dados de metadados do Airflow" },
+      { "id": "c", "text": "Um operador que executa SQL" },
+      { "id": "d", "text": "O log de execução de uma tarefa" }
+    ],
+    "correct": ["a"],
+    "explanation": "DAG = Directed Acyclic Graph. Ele descreve o que rodar e em que ordem; por ser acíclico, nenhuma tarefa depende de si mesma."
+  },
+  {
+    "slug": "wf-011",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["kafka"],
+    "difficulty": "medio",
+    "prompt": "Que garantia de ordem de mensagens o **Kafka** oferece?",
+    "options": [
+      { "id": "a", "text": "Ordem global em todo o tópico" },
+      { "id": "b", "text": "Ordem dentro de cada partição, mas não entre partições" },
+      { "id": "c", "text": "Ordem só dentro de cada consumer group" },
+      { "id": "d", "text": "Nenhuma garantia de ordem" }
+    ],
+    "correct": ["b"],
+    "explanation": "Cada partição é um log ordenado. Para manter a ordem de eventos relacionados (ex.: de um mesmo pedido), use a mesma chave, que leva à mesma partição."
+  },
+  {
+    "slug": "wf-012",
+    "type": "code_output",
+    "category": "WORKFLOW",
+    "tags": ["git", "shell"],
+    "difficulty": "medio",
+    "prompt": "Qual é a saída da última linha?",
+    "code": "git init -q demo && cd demo\ngit commit -q --allow-empty -m \"um\"\ngit commit -q --allow-empty -m \"dois\"\ngit log --oneline | wc -l",
+    "codeLang": "bash",
+    "options": [
+      { "id": "a", "text": "0" },
+      { "id": "b", "text": "1" },
+      { "id": "c", "text": "2" },
+      { "id": "d", "text": "3" }
+    ],
+    "correct": ["c"],
+    "explanation": "`--allow-empty` permite criar commits sem mudanças. São dois commits, e `git log --oneline` imprime uma linha por commit."
+  },
+  {
+    "slug": "wf-013",
+    "type": "true_false",
+    "category": "WORKFLOW",
+    "tags": ["ci-cd", "github-actions"],
+    "difficulty": "medio",
+    "prompt": "No GitHub Actions, os jobs de um mesmo workflow rodam em sequência por padrão.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["b"],
+    "explanation": "Os jobs rodam em paralelo por padrão. Para criar dependência entre eles, use `needs:`."
+  },
+  {
+    "slug": "wf-014",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["n8n", "automacao"],
+    "difficulty": "medio",
+    "prompt": "No **n8n**, o que inicia a execução automática de um workflow?",
+    "options": [
+      { "id": "a", "text": "O último nó do workflow" },
+      { "id": "b", "text": "Nada: só dá para executar manualmente pelo editor" },
+      { "id": "c", "text": "Um commit no repositório Git do workflow" },
+      {
+        "id": "d",
+        "text": "Um nó de gatilho (trigger), como Webhook, Schedule ou um evento de app"
+      }
+    ],
+    "correct": ["d"],
+    "explanation": "Todo workflow ativo começa por um nó trigger, que dispara a execução quando chega uma requisição, quando o horário bate ou quando um app emite um evento."
+  },
+  {
+    "slug": "wf-015",
+    "type": "code_output",
+    "category": "WORKFLOW",
+    "tags": ["shell", "bash"],
+    "difficulty": "dificil",
+    "prompt": "Qual é a saída deste script bash?",
+    "code": "x=1\n(x=2)\necho $x",
+    "codeLang": "bash",
+    "options": [
+      { "id": "a", "text": "1" },
+      { "id": "b", "text": "2" },
+      { "id": "c", "text": "Uma linha vazia" },
+      { "id": "d", "text": "Erro de sintaxe" }
+    ],
+    "correct": ["a"],
+    "explanation": "Os parênteses rodam o comando em um subshell. A atribuição `x=2` vale só dentro dele e não afeta o shell pai."
+  },
+  {
+    "slug": "wf-016",
+    "type": "multi_select",
+    "category": "WORKFLOW",
+    "tags": ["kafka"],
+    "difficulty": "dificil",
+    "prompt": "Sobre **consumer groups** no Kafka, quais afirmações são verdadeiras?",
+    "options": [
+      { "id": "a", "text": "Cada partição é lida por no máximo um consumidor do mesmo grupo" },
+      {
+        "id": "b",
+        "text": "Uma mensagem lida por um grupo é apagada do tópico para os outros grupos"
+      },
+      { "id": "c", "text": "Grupos diferentes podem ler o mesmo tópico de forma independente" },
+      {
+        "id": "d",
+        "text": "Com mais consumidores do que partições, os consumidores excedentes ficam ociosos"
+      }
+    ],
+    "correct": ["a", "c", "d"],
+    "explanation": "Cada grupo guarda seus próprios offsets, e as mensagens ficam no tópico até a retenção expirar, independentemente de quem leu. O paralelismo de um grupo é limitado pelo número de partições."
+  },
+  {
+    "slug": "wf-017",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["airflow"],
+    "difficulty": "dificil",
+    "prompt": "No Airflow, o que acontece com um DAG com `catchup=True` e `start_date` no passado ao ser ativado?",
+    "options": [
+      { "id": "a", "text": "As tarefas que falharam no passado são executadas de novo" },
+      {
+        "id": "b",
+        "text": "O scheduler cria execuções para todos os intervalos desde o `start_date` que ainda não rodaram"
+      },
+      { "id": "c", "text": "O DAG passa a rodar só manualmente" },
+      { "id": "d", "text": "O DAG ignora o `schedule` e roda uma única vez" }
+    ],
+    "correct": ["b"],
+    "explanation": "Com catchup, o Airflow faz o backfill de cada intervalo perdido. Se isso não for desejado, use `catchup=False`."
+  },
+  {
+    "slug": "wf-018",
+    "type": "multiple_choice",
+    "category": "WORKFLOW",
+    "tags": ["git"],
+    "difficulty": "dificil",
+    "prompt": "O que `git reset --hard HEAD~1` faz?",
+    "options": [
+      { "id": "a", "text": "Cria um novo commit que desfaz o último (como o `git revert`)" },
+      { "id": "b", "text": "Só tira os arquivos do stage, sem mexer nos commits" },
+      { "id": "c", "text": "Apaga o branch remoto" },
+      {
+        "id": "d",
+        "text": "Move o branch para o commit anterior e descarta o último commit e as mudanças não commitadas"
+      }
+    ],
+    "correct": ["d"],
+    "explanation": "`--hard` move o branch e sobrescreve o índice e o diretório de trabalho. O commit ainda pode ser recuperado pelo `git reflog` por um tempo; mudanças não commitadas, não."
+  },
+  {
+    "slug": "wf-019",
+    "type": "true_false",
+    "category": "WORKFLOW",
+    "tags": ["docker"],
+    "difficulty": "dificil",
+    "prompt": "Em um Dockerfile, a instrução `EXPOSE 3000` publica automaticamente a porta 3000 no host.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["b"],
+    "explanation": "`EXPOSE` só documenta a porta que a aplicação usa. Para publicar no host é preciso `-p 3000:3000` no `docker run` ou `ports:` no compose."
+  },
+  {
+    "slug": "wf-020",
+    "type": "code_output",
+    "category": "WORKFLOW",
+    "tags": ["shell", "linux"],
+    "difficulty": "facil",
+    "prompt": "Qual é a saída da última linha?",
+    "code": "mkdir -p logs && touch logs/a.log logs/b.log logs/c.txt\nls logs/*.log | wc -l",
+    "codeLang": "bash",
+    "options": [
+      { "id": "a", "text": "1" },
+      { "id": "b", "text": "3" },
+      { "id": "c", "text": "2" },
+      { "id": "d", "text": "0" }
+    ],
+    "correct": ["c"],
+    "explanation": "O glob `*.log` casa com `a.log` e `b.log`, mas não com `c.txt`. O `wc -l` conta as 2 linhas da saída do `ls`."
+  }
+]

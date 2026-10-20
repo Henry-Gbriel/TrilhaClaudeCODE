@@ -1,0 +1,331 @@
+[
+  {
+    "slug": "prog-001",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["sql"],
+    "difficulty": "facil",
+    "prompt": "Qual cláusula SQL filtra as linhas **antes** do agrupamento?",
+    "options": [
+      { "id": "a", "text": "WHERE" },
+      { "id": "b", "text": "HAVING" },
+      { "id": "c", "text": "ORDER BY" },
+      { "id": "d", "text": "GROUP BY" }
+    ],
+    "correct": ["a"],
+    "explanation": "`WHERE` filtra as linhas antes do `GROUP BY`; `HAVING` filtra os grupos já agregados, por isso pode usar `COUNT`, `SUM` etc."
+  },
+  {
+    "slug": "prog-002",
+    "type": "code_output",
+    "category": "PROGRAMACAO",
+    "tags": ["python"],
+    "difficulty": "facil",
+    "prompt": "Qual é a saída?",
+    "code": "nums = [3, 1, 2]\nnums.sort()\nprint(nums)",
+    "codeLang": "python",
+    "options": [
+      { "id": "a", "text": "[3, 1, 2]" },
+      { "id": "b", "text": "[1, 2, 3]" },
+      { "id": "c", "text": "None" },
+      { "id": "d", "text": "[3, 2, 1]" }
+    ],
+    "correct": ["b"],
+    "explanation": "`list.sort()` ordena a lista no lugar (e retorna `None`). Como o código imprime `nums`, e não o retorno do `sort()`, sai a lista ordenada."
+  },
+  {
+    "slug": "prog-003",
+    "type": "true_false",
+    "category": "PROGRAMACAO",
+    "tags": ["javascript"],
+    "difficulty": "facil",
+    "prompt": "Em JavaScript, `===` compara valor e tipo, sem conversão implícita.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["a"],
+    "explanation": "`===` é a igualdade estrita: `1 === '1'` é `false`. Já `==` converte os tipos antes de comparar, e `1 == '1'` é `true`."
+  },
+  {
+    "slug": "prog-004",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["estruturas-de-dados"],
+    "difficulty": "facil",
+    "prompt": "Qual estrutura segue a regra **LIFO** (o último a entrar é o primeiro a sair)?",
+    "options": [
+      { "id": "a", "text": "Fila" },
+      { "id": "b", "text": "Árvore" },
+      { "id": "c", "text": "Pilha" },
+      { "id": "d", "text": "Tabela hash" }
+    ],
+    "correct": ["c"],
+    "explanation": "Na pilha (stack), `push` e `pop` acontecem no topo. A fila é FIFO: o primeiro a entrar é o primeiro a sair."
+  },
+  {
+    "slug": "prog-005",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["testes"],
+    "difficulty": "facil",
+    "prompt": "O que é um **teste unitário**?",
+    "options": [
+      { "id": "a", "text": "Um teste do sistema inteiro pela interface, como um usuário faria" },
+      { "id": "b", "text": "Um roteiro de teste executado manualmente" },
+      { "id": "c", "text": "Um teste de carga com muitos usuários simultâneos" },
+      {
+        "id": "d",
+        "text": "Um teste de uma pequena unidade de código, como uma função, de forma isolada"
+      }
+    ],
+    "correct": ["d"],
+    "explanation": "Testes unitários são rápidos e isolados. A alternativa A descreve testes end-to-end, e a C, testes de carga."
+  },
+  {
+    "slug": "prog-006",
+    "type": "code_output",
+    "category": "PROGRAMACAO",
+    "tags": ["javascript"],
+    "difficulty": "medio",
+    "prompt": "Qual é a saída no Node.js?",
+    "code": "console.log([1, 2, 3].map((x) => x * 2).filter((x) => x > 2));",
+    "codeLang": "javascript",
+    "options": [
+      { "id": "a", "text": "[ 2, 4, 6 ]" },
+      { "id": "b", "text": "[ 6 ]" },
+      { "id": "c", "text": "[ 4, 6 ]" },
+      { "id": "d", "text": "[ 1, 2, 3 ]" }
+    ],
+    "correct": ["c"],
+    "explanation": "O `map` gera `[2, 4, 6]` e o `filter` mantém só os maiores que 2: `[4, 6]`."
+  },
+  {
+    "slug": "prog-007",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["sql"],
+    "difficulty": "facil",
+    "prompt": "Qual JOIN retorna todas as linhas da tabela da esquerda, mesmo sem correspondência na da direita?",
+    "options": [
+      { "id": "a", "text": "INNER JOIN" },
+      { "id": "b", "text": "LEFT JOIN" },
+      { "id": "c", "text": "CROSS JOIN" },
+      { "id": "d", "text": "RIGHT JOIN" }
+    ],
+    "correct": ["b"],
+    "explanation": "O `LEFT JOIN` mantém todas as linhas da esquerda e preenche com `NULL` as colunas da direita quando não há correspondência."
+  },
+  {
+    "slug": "prog-008",
+    "type": "true_false",
+    "category": "PROGRAMACAO",
+    "tags": ["java"],
+    "difficulty": "medio",
+    "prompt": "Em Java, comparar duas `String` com `==` compara o conteúdo delas.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["b"],
+    "explanation": "`==` compara referências (se é o mesmo objeto). Para comparar o conteúdo, use `equals()`."
+  },
+  {
+    "slug": "prog-009",
+    "type": "multi_select",
+    "category": "PROGRAMACAO",
+    "tags": ["typescript"],
+    "difficulty": "medio",
+    "prompt": "Quais destes são tipos utilitários nativos do TypeScript?",
+    "options": [
+      { "id": "a", "text": "Partial<T>" },
+      { "id": "b", "text": "Pick<T, K>" },
+      { "id": "c", "text": "Nullable<T>" },
+      { "id": "d", "text": "Record<K, T>" }
+    ],
+    "correct": ["a", "b", "d"],
+    "explanation": "`Partial`, `Pick` e `Record` vêm com o TypeScript. Não existe `Nullable` nativo; o que existe é `NonNullable<T>`, que faz o contrário."
+  },
+  {
+    "slug": "prog-010",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["estruturas-de-dados", "complexidade"],
+    "difficulty": "medio",
+    "prompt": "Qual é a complexidade **média** de uma busca por chave em uma tabela hash?",
+    "options": [
+      { "id": "a", "text": "O(1)" },
+      { "id": "b", "text": "O(log n)" },
+      { "id": "c", "text": "O(n)" },
+      { "id": "d", "text": "O(n log n)" }
+    ],
+    "correct": ["a"],
+    "explanation": "O hash da chave aponta direto para o bucket, então a busca é O(1) em média. No pior caso, com muitas colisões, pode chegar a O(n)."
+  },
+  {
+    "slug": "prog-011",
+    "type": "code_output",
+    "category": "PROGRAMACAO",
+    "tags": ["python"],
+    "difficulty": "dificil",
+    "prompt": "Qual é a saída?",
+    "code": "def add(item, lista=[]):\n    lista.append(item)\n    return lista\n\nadd(1)\nprint(add(2))",
+    "codeLang": "python",
+    "options": [
+      { "id": "a", "text": "[2]" },
+      { "id": "b", "text": "[1]" },
+      { "id": "c", "text": "TypeError" },
+      { "id": "d", "text": "[1, 2]" }
+    ],
+    "correct": ["d"],
+    "explanation": "O valor padrão é criado uma única vez, quando a função é definida, e a mesma lista é compartilhada entre as chamadas. Use `lista=None` e crie a lista dentro da função."
+  },
+  {
+    "slug": "prog-012",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["testes"],
+    "difficulty": "medio",
+    "prompt": "Para que serve um **mock** em testes?",
+    "options": [
+      { "id": "a", "text": "Medir a cobertura de código" },
+      { "id": "b", "text": "Rodar os testes em paralelo" },
+      {
+        "id": "c",
+        "text": "Substituir uma dependência real (API, banco) por uma versão controlada, para isolar o que está sendo testado"
+      },
+      { "id": "d", "text": "Gerar dados aleatórios para os testes" }
+    ],
+    "correct": ["c"],
+    "explanation": "Mocks simulam dependências e permitem verificar como elas foram chamadas, sem depender de rede, banco ou serviços externos."
+  },
+  {
+    "slug": "prog-013",
+    "type": "code_output",
+    "category": "PROGRAMACAO",
+    "tags": ["javascript", "ponto-flutuante"],
+    "difficulty": "medio",
+    "prompt": "Qual é a saída?",
+    "code": "console.log(0.1 + 0.2 === 0.3);",
+    "codeLang": "javascript",
+    "options": [
+      { "id": "a", "text": "true" },
+      { "id": "b", "text": "false" },
+      { "id": "c", "text": "undefined" },
+      { "id": "d", "text": "NaN" }
+    ],
+    "correct": ["b"],
+    "explanation": "Em ponto flutuante binário (IEEE 754), `0.1 + 0.2` dá `0.30000000000000004`. Compare com uma tolerância, como `Math.abs(a - b) < Number.EPSILON`."
+  },
+  {
+    "slug": "prog-014",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["sql"],
+    "difficulty": "dificil",
+    "prompt": "Qual é a diferença entre `COUNT(*)` e `COUNT(coluna)`?",
+    "options": [
+      { "id": "a", "text": "Nenhuma, os dois sempre retornam o mesmo valor" },
+      { "id": "b", "text": "`COUNT(coluna)` conta só os valores distintos" },
+      {
+        "id": "c",
+        "text": "`COUNT(*)` conta todas as linhas; `COUNT(coluna)` ignora as linhas em que a coluna é NULL"
+      },
+      { "id": "d", "text": "`COUNT(*)` ignora as linhas com algum NULL" }
+    ],
+    "correct": ["c"],
+    "explanation": "`COUNT(coluna)` conta os valores não nulos. Para contar distintos é preciso `COUNT(DISTINCT coluna)`."
+  },
+  {
+    "slug": "prog-015",
+    "type": "multi_select",
+    "category": "PROGRAMACAO",
+    "tags": ["python"],
+    "difficulty": "dificil",
+    "prompt": "Quais destes valores podem ser **chaves** de um `dict` em Python?",
+    "options": [
+      { "id": "a", "text": "(1, 2)  (tupla de inteiros)" },
+      { "id": "b", "text": "[1, 2]  (lista)" },
+      { "id": "c", "text": "\"id\"  (string)" },
+      { "id": "d", "text": "frozenset({1, 2})" }
+    ],
+    "correct": ["a", "c", "d"],
+    "explanation": "Chaves precisam ser hashable. Tuplas de imutáveis, strings e frozensets são; listas são mutáveis e não têm hash."
+  },
+  {
+    "slug": "prog-016",
+    "type": "true_false",
+    "category": "PROGRAMACAO",
+    "tags": ["javascript"],
+    "difficulty": "dificil",
+    "prompt": "Em JavaScript, `typeof null` retorna `\"object\"`.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["a"],
+    "explanation": "É um bug histórico da linguagem, mantido por compatibilidade. Para testar nulo, use `valor === null`."
+  },
+  {
+    "slug": "prog-017",
+    "type": "true_false",
+    "category": "PROGRAMACAO",
+    "tags": ["testes"],
+    "difficulty": "facil",
+    "prompt": "Ter 100% de cobertura de testes garante que o código não tem bugs.",
+    "options": [
+      { "id": "a", "text": "Verdadeiro" },
+      { "id": "b", "text": "Falso" }
+    ],
+    "correct": ["b"],
+    "explanation": "Cobertura diz quais linhas foram executadas, não se o comportamento foi verificado. Um teste sem asserções boas cobre o código e não pega nada."
+  },
+  {
+    "slug": "prog-018",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["java"],
+    "difficulty": "dificil",
+    "prompt": "Em Java, o que acontece ao acessar um índice fora dos limites de um array?",
+    "options": [
+      { "id": "a", "text": "Retorna `null`" },
+      { "id": "b", "text": "Lança `ArrayIndexOutOfBoundsException` em tempo de execução" },
+      { "id": "c", "text": "Retorna 0" },
+      { "id": "d", "text": "O código não compila" }
+    ],
+    "correct": ["b"],
+    "explanation": "O índice é verificado em tempo de execução. O compilador não consegue detectar isso em geral, porque o índice costuma vir de uma variável."
+  },
+  {
+    "slug": "prog-019",
+    "type": "multiple_choice",
+    "category": "PROGRAMACAO",
+    "tags": ["typescript"],
+    "difficulty": "medio",
+    "prompt": "O que acontece com as anotações de tipo do TypeScript em tempo de execução?",
+    "options": [
+      { "id": "a", "text": "São validadas automaticamente a cada chamada de função" },
+      { "id": "b", "text": "Deixam o código mais rápido" },
+      { "id": "c", "text": "Viram asserts no JavaScript gerado" },
+      { "id": "d", "text": "São removidas na compilação, e não há checagem de tipo em runtime" }
+    ],
+    "correct": ["d"],
+    "explanation": "Os tipos existem só na compilação. Para validar dados externos em runtime (como payloads de API), use uma biblioteca como o Zod."
+  },
+  {
+    "slug": "prog-020",
+    "type": "multi_select",
+    "category": "PROGRAMACAO",
+    "tags": ["sql"],
+    "difficulty": "medio",
+    "prompt": "Quais destes comandos fazem parte da **DML** (manipulação de dados) do SQL?",
+    "options": [
+      { "id": "a", "text": "INSERT" },
+      { "id": "b", "text": "CREATE TABLE" },
+      { "id": "c", "text": "UPDATE" },
+      { "id": "d", "text": "DELETE" }
+    ],
+    "correct": ["a", "c", "d"],
+    "explanation": "DML manipula os dados das tabelas (`INSERT`, `UPDATE`, `DELETE`). `CREATE TABLE` é DDL, que define a estrutura."
+  }
+]

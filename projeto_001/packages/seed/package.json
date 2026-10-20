@@ -1,0 +1,20 @@
+{
+  "name": "@devquiz/seed",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gen": "tsx src/cli.ts",
+    "build": "echo \"@devquiz/seed: só gera supabase/seed/questions.sql, sem build\"",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@devquiz/shared": "workspace:*",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.15"
+  }
+}

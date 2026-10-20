@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Projeto **DevQuiz Arena** (nome provisório): quiz competitivo em tempo real, de uso interno, sobre IA, ferramentas de workflow e programação. O PRD em `.llm/prd.md` é a **fonte de verdade**. Leia o PRD antes de cada marco e trabalhe **um marco por vez** (M0 → M8, seção 15 do PRD). Cada marco termina com testes passando e uma demo funcional.
 
-**M0 (fundação) e M1 (game engine) concluídos.** Apps web e realtime ainda são placeholders (`/health`, home). Decisões já tomadas: Supabase **cloud** (o compose não inclui a stack do Supabase) e CI na raiz do repositório git.
+**M0 (fundação), M1 (game engine) e M2 (Supabase) concluídos.** Apps web e realtime ainda são placeholders (`/health`, home). Decisões já tomadas: Supabase **cloud** (o compose não inclui a stack do Supabase) e CI na raiz do repositório git.
 
 `../projeto_000` é **somente leitura**: nunca edite, formate, mova ou commite nada nele.
 
@@ -20,16 +20,20 @@ pnpm 12 via corepack (`packageManager` no `package.json`), Node 22. Tudo roda na
 pnpm install
 pnpm dev                 # web em :3000 (Next) + realtime em :4000 (tsx watch)
 pnpm lint | pnpm typecheck | pnpm test | pnpm build | pnpm format[:check]
-pnpm --filter @devquiz/game-engine test -- src/x.test.ts -t "nome do teste"   # um teste só
+pnpm --filter @devquiz/game-engine exec vitest run src/x.test.ts -t "nome do teste"   # um teste só
 pnpm db:start | db:stop | db:types   # Supabase local via CLI (devDependency, sem instalação global)
+pnpm db:test                          # testes pgTAP de RLS (supabase/tests/database), com o Supabase local no ar
+pnpm db:seed:gen                      # gera supabase/seed/questions.sql a partir dos JSON
 pnpm docker:up | docker:down | docker:logs   # stack web + realtime + caddy em https://localhost
 ```
 
 - Um único `.env` na **raiz** (modelo em `.env.example`) serve para tudo: o realtime o carrega via `--env-file-if-exists`, a web via `loadEnvConfig` no `next.config.ts` e o compose via `--env-file .env` (por isso use os scripts `docker:*`, não `docker compose` direto).
 - A porta do realtime é `REALTIME_PORT`, não `PORT`: o `PORT` do `.env` compartilhado sequestraria a porta do Next.
 - `NEXT_PUBLIC_*` são fixadas no build da imagem web (build args no compose).
+- Para rodar um teste só, use `exec vitest run` (como acima): `test -- <arquivo>` ignora o filtro e roda tudo, e `test <arquivo>` falha nos limites de cobertura da engine, que valem para o pacote inteiro.
+- `db:types` usa `--db-url` do Postgres local porque o `--local` do CLI 2.120 falha na autenticação. O arquivo gerado (`packages/shared/src/database.types.ts`) fica fora do Prettier e do ESLint, e o CI falha se ele estiver desatualizado.
 - pnpm 12 só roda scripts de install das dependências em `allowBuilds` no `pnpm-workspace.yaml`.
-- CI: `../.github/workflows/projeto_001.yml` (raiz do repositório git) roda format, lint, typecheck, test, build e o build das imagens Docker.
+- CI: `../.github/workflows/projeto_001.yml` (raiz do repositório git) roda format, lint, typecheck, test, build, o build das imagens Docker e um job `db` (Postgres do Supabase local: migrações + seed, `db:test` e tipos atualizados).
 
 ## Arquitetura
 
@@ -37,10 +41,11 @@ Os pacotes `@devquiz/shared` e `@devquiz/game-engine` exportam **TS-fonte** (`ex
 
 ```
 apps/web            Next.js (App Router) + Tailwind + shadcn/ui: login, host, jogador, telão, solo
-apps/realtime       Node.js + Socket.IO (sala ao vivo) + API HTTP do modo solo
+apps/realtime       Fastify + Socket.IO (sala ao vivo) + API HTTP do modo solo
 packages/shared     Tipos, schemas Zod e contrato de eventos/API (seção 13 do PRD)
 packages/game-engine  Regras puras: máquinas de estado, pontuação, streak, times, desempate, badges
-supabase/migrations SQL do schema + RLS;  supabase/seed: seed com ~60 perguntas
+packages/seed       Gerador do seed (valida os JSON com questionSchema e gera o SQL)
+supabase/           migrations (schema + RLS), seed/questions/*.json (60 perguntas), tests/database (pgTAP)
 infra/              docker-compose.yml e Caddyfile
 ```
 
@@ -66,6 +71,7 @@ As duas máquinas de estado são **reducers puros**: `liveReducer(state, event)`
 - O tempo de resposta é medido **no servidor** (do envio da pergunta até o recebimento da resposta).
 - A tabela `questions` fica sem acesso para `anon`/`authenticated` (RLS). Só o servidor lê, com a **secret key** (`SUPABASE_SECRET_KEY`, `sb_secret_…`, o que o PRD chama de service role key), que existe apenas em `apps/realtime` e no código server-side, nunca no bundle client. No navegador vai só a publishable key (`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`). O JWT é validado pelas chaves públicas em `SUPABASE_JWKS_URL`.
 - Schema muda só por migração em `supabase/migrations`.
+- Perguntas do seed: edite `supabase/seed/questions/*.json` → `pnpm db:seed:gen` → `pnpm exec supabase db reset`. O `questions.sql` é gerado (um teste falha se estiver desatualizado) e o upsert por `slug` não sobrescreve o `status`, para preservar o que a curadoria arquivou. Cada categoria precisa de 20 perguntas, cobrindo todos os tipos e dificuldades.
 - O sistema **não executa código**: perguntas `code_output` são estáticas.
 - Pontuação (seção 7): acerto = `round(1000 * (1 - (t/t_limite)/2))`; streak ≥3 dá `+100 * min(streak-2, 5)`; multiplicador de dificuldade 1x/1,25x/1,5x; `multi_select` proporcional com mínimo 0; time = **média** dos membros; desempate por mais acertos e, depois, menor tempo médio.
 - Conteúdo e UI em `pt-BR`. Commits pequenos e convencionais (`feat:`, `fix:`, `test:`, `chore:`).
