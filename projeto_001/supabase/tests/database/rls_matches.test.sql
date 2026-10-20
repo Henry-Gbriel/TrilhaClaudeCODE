@@ -2,14 +2,11 @@
 begin;
 select plan(9);
 
-insert into auth.users (id, email) values
-  ('00000000-0000-0000-0000-00000000000a', 'ana@example.com'),
-  ('00000000-0000-0000-0000-00000000000b', 'bia@example.com'),
-  ('00000000-0000-0000-0000-00000000000c', 'caio@example.com');
-insert into public.profiles (id, display_name) values
-  ('00000000-0000-0000-0000-00000000000a', 'Ana'),
-  ('00000000-0000-0000-0000-00000000000b', 'Bia'),
-  ('00000000-0000-0000-0000-00000000000c', 'Caio');
+-- O trigger on_auth_user_created cria os perfis a partir do full_name.
+insert into auth.users (id, email, raw_user_meta_data) values
+  ('00000000-0000-0000-0000-00000000000a', 'ana@example.com', '{"full_name":"Ana"}'),
+  ('00000000-0000-0000-0000-00000000000b', 'bia@example.com', '{"full_name":"Bia"}'),
+  ('00000000-0000-0000-0000-00000000000c', 'caio@example.com', '{"full_name":"Caio"}');
 
 -- Partida 1: Ana e Bia. Partida 2: só Caio.
 insert into public.matches (id, mode, host_id, settings, started_at) values

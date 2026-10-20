@@ -15,10 +15,12 @@
     "@devquiz/game-engine": "workspace:*",
     "@devquiz/shared": "workspace:*",
     "fastify": "^5.12.5",
+    "jose": "^6.2.12",
     "socket.io": "^4.8.4",
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "socket.io-client": "^4.8.4",
     "tsup": "^8.5.1",
     "tsx": "^4.23.15"
   }

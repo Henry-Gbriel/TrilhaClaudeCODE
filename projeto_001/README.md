@@ -2,7 +2,7 @@
 
 Quiz competitivo em tempo real sobre IA, ferramentas de workflow e programação, para uso interno de times. Requisitos completos em [`.llm/prd.md`](.llm/prd.md).
 
-> Status: **M0 (fundação)**, **M1 (game engine)** e **M2 (Supabase: schema, RLS, tipos e seed)** concluídos. As apps web e realtime ainda são placeholders.
+> Status: **M0 (fundação)**, **M1 (game engine)**, **M2 (Supabase: schema, RLS, tipos e seed)** e **M3 (login GitHub/Google, perfil e JWT no servidor)** concluídos. As salas de jogo começam no M4.
 
 ## Stack
 
@@ -22,7 +22,7 @@ Monorepo **pnpm** com TypeScript estrito:
 
 - Node 22 (`.nvmrc`) e corepack (`corepack enable` instala o pnpm da versão certa)
 - Docker com Compose, para a stack completa
-- Um projeto no [Supabase](https://supabase.com) (cloud)
+- Um projeto no [Supabase](https://supabase.com) (cloud) com os provedores **GitHub** e **Google** ativos (Authentication → Sign In / Providers), a callback `https://<project-ref>.supabase.co/auth/v1/callback` cadastrada nos OAuth apps e `http://localhost:3000/**` em Authentication → URL Configuration → Redirect URLs
 
 ## Setup
 

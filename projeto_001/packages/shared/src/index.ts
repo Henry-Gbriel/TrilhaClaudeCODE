@@ -95,3 +95,36 @@ export const questionSchema = z
     if (q.codeLang !== undefined && q.code === undefined) issue('codeLang sem code', 'codeLang');
   });
 export type Question = z.infer<typeof questionSchema>;
+
+// Perfil (RF-02). Os limites batem com o check de `profiles.display_name` no banco.
+export const DISPLAY_NAME_MAX = 24;
+export const AVATAR_EMOJIS = [
+  '🙂',
+  '😎',
+  '🤓',
+  '🤖',
+  '👾',
+  '🦊',
+  '🐙',
+  '🐧',
+  '🦉',
+  '🐢',
+  '🚀',
+  '⚡',
+  '🔥',
+  '🧠',
+  '🎯',
+  '☕',
+] as const;
+export const avatarEmojiSchema = z.enum(AVATAR_EMOJIS);
+export type AvatarEmoji = z.infer<typeof avatarEmojiSchema>;
+
+export const profileUpdateSchema = z.object({
+  displayName: z
+    .string()
+    .trim()
+    .min(1, 'Informe um nome.')
+    .max(DISPLAY_NAME_MAX, `Use até ${String(DISPLAY_NAME_MAX)} caracteres.`),
+  avatarEmoji: avatarEmojiSchema,
+});
+export type ProfileUpdate = z.infer<typeof profileUpdateSchema>;

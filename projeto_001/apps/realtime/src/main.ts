@@ -1,8 +1,9 @@
+import { verifierFromEnv } from './auth.js';
 import { loadEnv } from './env.js';
 import { buildServer } from './server.js';
 
 const env = loadEnv();
-const { app } = buildServer(env);
+const { app } = buildServer(env, { verifyToken: verifierFromEnv(env) });
 
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {
   process.once(signal, () => {

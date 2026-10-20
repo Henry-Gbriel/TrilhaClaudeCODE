@@ -2,12 +2,10 @@
 begin;
 select plan(5);
 
-insert into auth.users (id, email) values
-  ('00000000-0000-0000-0000-00000000000a', 'ana@example.com'),
-  ('00000000-0000-0000-0000-00000000000b', 'bia@example.com');
-insert into public.profiles (id, display_name) values
-  ('00000000-0000-0000-0000-00000000000a', 'Ana'),
-  ('00000000-0000-0000-0000-00000000000b', 'Bia');
+-- O trigger on_auth_user_created cria os perfis a partir do full_name.
+insert into auth.users (id, email, raw_user_meta_data) values
+  ('00000000-0000-0000-0000-00000000000a', 'ana@example.com', '{"full_name":"Ana"}'),
+  ('00000000-0000-0000-0000-00000000000b', 'bia@example.com', '{"full_name":"Bia"}');
 insert into public.questions (id, slug, type, category, difficulty, prompt, options, correct, explanation)
 values ('20000000-0000-0000-0000-000000000001', 'tst-001', 'true_false', 'IA', 'facil', 'x',
   '[{"id":"a","text":"V"},{"id":"b","text":"F"}]', '["a"]', 'x');

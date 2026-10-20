@@ -8,7 +8,8 @@ const envSchema = z.object({
   SUPABASE_URL: z.url().optional(),
   // Secret key (substitui a antiga service_role): ignora RLS, só no servidor. Opcional até o M2/M3.
   SUPABASE_SECRET_KEY: z.string().startsWith('sb_secret_').optional(),
-  // Chaves públicas para validar o JWT do Supabase Auth (M3).
+  // Chaves públicas para validar o JWT do Supabase Auth. SUPABASE_URL e esta são exigidas no boot
+  // (auth.ts/verifierFromEnv), não aqui, para os testes não precisarem delas.
   SUPABASE_JWKS_URL: z.url().optional(),
 });
 

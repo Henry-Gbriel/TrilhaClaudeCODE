@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Projeto **DevQuiz Arena** (nome provisório): quiz competitivo em tempo real, de uso interno, sobre IA, ferramentas de workflow e programação. O PRD em `.llm/prd.md` é a **fonte de verdade**. Leia o PRD antes de cada marco e trabalhe **um marco por vez** (M0 → M8, seção 15 do PRD). Cada marco termina com testes passando e uma demo funcional.
 
-**M0 (fundação), M1 (game engine) e M2 (Supabase) concluídos.** Apps web e realtime ainda são placeholders (`/health`, home). Decisões já tomadas: Supabase **cloud** (o compose não inclui a stack do Supabase) e CI na raiz do repositório git.
+**M0 (fundação), M1 (game engine), M2 (Supabase) e M3 (auth) concluídos.** A web tem login, home e perfil; o realtime só autentica (salas no M4). Em dev, o login usa o Supabase **cloud** (GitHub e Google configurados lá); o Supabase local serve para pgTAP e CI. Decisões já tomadas: Supabase **cloud** (o compose não inclui a stack do Supabase), CI na raiz do repositório git e login **sem restrição** de e-mail/domínio (qualquer conta GitHub ou Google; allowlist fora do MVP).
 
 `../projeto_000` é **somente leitura**: nunca edite, formate, mova ou commite nada nele.
 
@@ -27,7 +27,7 @@ pnpm db:seed:gen                      # gera supabase/seed/questions.sql a parti
 pnpm docker:up | docker:down | docker:logs   # stack web + realtime + caddy em https://localhost
 ```
 
-- Um único `.env` na **raiz** (modelo em `.env.example`) serve para tudo: o realtime o carrega via `--env-file-if-exists`, a web via `loadEnvConfig` no `next.config.ts` e o compose via `--env-file .env` (por isso use os scripts `docker:*`, não `docker compose` direto).
+- Um único `.env` na **raiz** (modelo em `.env.example`) serve para tudo: o realtime o carrega via `--env-file-if-exists`, a web via `loadEnvConfig(..., forceReload)` no `next.config.ts`, que repassa as `NEXT_PUBLIC_*` pela opção `env` (o Next recarrega o `process.env` do próprio snapshot e as perderia) e o compose via `--env-file .env` (por isso use os scripts `docker:*`, não `docker compose` direto).
 - A porta do realtime é `REALTIME_PORT`, não `PORT`: o `PORT` do `.env` compartilhado sequestraria a porta do Next.
 - `NEXT_PUBLIC_*` são fixadas no build da imagem web (build args no compose).
 - Para rodar um teste só, use `exec vitest run` (como acima): `test -- <arquivo>` ignora o filtro e roda tudo, e `test <arquivo>` falha nos limites de cobertura da engine, que valem para o pacote inteiro.
@@ -50,6 +50,12 @@ infra/              docker-compose.yml e Caddyfile
 ```
 
 Fluxo central: o front autentica via Supabase Auth (GitHub/Google) → envia o `access_token` no handshake do Socket.IO (`auth: { token }`) ou nas rotas da API → `apps/realtime` valida o JWT, lê as perguntas com a service role key, conduz a partida usando `game-engine` e grava só o resultado final em `matches`/`match_players`.
+
+### Auth (M3)
+
+- **Web** (`@supabase/ssr`, sessão em cookies): `src/proxy.ts` renova a sessão (`getClaims`) e manda quem não está logado para `/login?next=`. Isso é só checagem otimista: páginas leem o usuário pelo DAL `getCurrentUser()` (`src/lib/auth.ts`) dentro de `<Suspense>` (Cache Components), e cada Server Function confere a sessão de novo. O OAuth volta em `/auth/callback` (troca do `code` PKCE) e todo `next` passa por `safeNextPath` (anti open redirect).
+- **Perfil**: criado pelo trigger `on_auth_user_created` (nome vindo do provedor ou do e-mail). O usuário só pode dar `update` em `display_name`/`avatar_emoji` (grant por coluna), validados por `profileUpdateSchema` em `shared`.
+- **Realtime**: `createTokenVerifier` (`jose`) valida o JWT pelo JWKS (ES256/RS256, `aud=authenticated`, `iss=${SUPABASE_URL}/auth/v1`). O socket recusa o handshake sem token válido com `UNAUTHORIZED`; `/api/*` exige `Authorization: Bearer` e responde 401. O verifier é injetado em `buildServer(env, { verifyToken })`: os testes usam `createTestAuth()` (`src/test-auth.ts`, par de chaves local e sem rede), e o boot exige `SUPABASE_URL` e `SUPABASE_JWKS_URL`.
 
 - **Estado das salas em memória**, em uma única instância (até 20 jogadores por sala, cerca de 10 salas). Fica atrás de uma interface `RoomStore`, para que trocar por Redis no futuro seja simples. Perder partidas em andamento num restart é aceitável no MVP.
 - **Sala ao vivo**: `LOBBY → COUNTDOWN → QUESTION_OPEN → QUESTION_CLOSED → REVEAL → LEADERBOARD →` (loop) `→ PODIUM → FINISHED`; qualquer estado pode ir para `PAUSED` e voltar ao anterior.

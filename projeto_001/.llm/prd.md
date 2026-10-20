@@ -114,7 +114,7 @@ Cada pergunta tem categoria, tags, dificuldade (`facil` | `medio` | `dificil`) e
 ### Autenticação
 - RF-01: Login com GitHub ou Google via Supabase Auth. Sem login não se joga.
 - RF-02: Perfil com nome de exibição e avatar emoji, editáveis.
-- RF-03 (opcional, configurável): restringir o login a uma lista de e-mails ou domínios permitidos, já que o uso é interno.
+- RF-03 (backlog): restringir o login a uma lista de e-mails ou domínios permitidos. **Decidido: no MVP não há restrição**; qualquer conta GitHub ou Google entra.
 
 ### Host (sala ao vivo)
 - RF-04: Criar sala definindo categorias, dificuldade, número de perguntas (5 a 30), tempo por pergunta (10 a 60 s), modo times e multiplicador.
@@ -329,7 +329,7 @@ Cada marco termina com testes passando e uma demo funcional.
 - **M0. Fundação**: monorepo pnpm, TypeScript estrito, ESLint e Prettier, CI (lint e testes), Dockerfiles, `docker-compose.yml` com `web`, `realtime` e `caddy`, projeto Supabase e `.env.example`.
 - **M1. Game engine**: máquina de estados (ao vivo e solo), pontuação, streak, multiplicador, times com média, desempate e badges. Funções puras com cobertura alta.
 - **M2. Supabase**: migrações do schema, RLS, tipos gerados, script de seed com cerca de 60 perguntas (20 por categoria).
-- **M3. Auth**: login GitHub e Google, criação automática de `profiles`, validação de JWT no servidor e allowlist opcional de e-mails/domínios.
+- **M3. Auth**: login GitHub e Google, criação automática de `profiles`, validação de JWT no servidor. (Allowlist de e-mails/domínios fora do MVP, ver RF-03.)
 - **M4. Servidor realtime**: salas com PIN, join, reconexão, fluxo completo da partida, `RoomStore` em memória e gravação do resultado em `matches`/`match_players`.
 - **M5. UI da sala ao vivo**: home, configuração, lobby, pergunta, revelação, ranking, pódio e telão.
 - **M6. Modo times**: escolha e balanceamento, ranking de times, UI.
@@ -339,7 +339,7 @@ Cada marco termina com testes passando e uma demo funcional.
 ## 16. Questões em aberto
 
 1. O Supabase será **gerenciado (cloud)** ou **self-hosted** na mesma VM? Considerando a política da empresa sobre dados fora da infra, isso define se o `docker-compose` inclui a stack do Supabase.
-2. Haverá restrição de login por domínio de e-mail? Se sim, quais domínios?
+2. ~~Haverá restrição de login por domínio de e-mail?~~ **Decidido:** não; qualquer conta GitHub ou Google.
 3. Quem cadastra e revisa as perguntas? Basta o Table Editor do Supabase no início?
 4. Nome definitivo do produto.
 

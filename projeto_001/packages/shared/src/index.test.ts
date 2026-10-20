@@ -3,7 +3,10 @@ import {
   CATEGORIES,
   categorySchema,
   difficultySchema,
+  AVATAR_EMOJIS,
+  DISPLAY_NAME_MAX,
   liveSettingsSchema,
+  profileUpdateSchema,
   questionSchema,
   soloConfigSchema,
 } from './index.js';
@@ -123,5 +126,23 @@ describe('questionSchema', () => {
     ['campo desconhecido', { status: 'published' }],
   ])('rejeita %s', (_label, patch) => {
     expect(questionSchema.safeParse({ ...base, ...patch }).success).toBe(false);
+  });
+});
+
+describe('profileUpdateSchema', () => {
+  it('aceita nome e emoji da lista, aparando espaços', () => {
+    expect(profileUpdateSchema.parse({ displayName: '  Ana  ', avatarEmoji: '🚀' })).toEqual({
+      displayName: 'Ana',
+      avatarEmoji: '🚀',
+    });
+    expect(AVATAR_EMOJIS[0]).toBe('🙂');
+  });
+
+  it.each([
+    ['nome vazio', { displayName: '   ', avatarEmoji: '🙂' }],
+    ['nome longo', { displayName: 'x'.repeat(DISPLAY_NAME_MAX + 1), avatarEmoji: '🙂' }],
+    ['emoji fora da lista', { displayName: 'Ana', avatarEmoji: '💩' }],
+  ])('rejeita %s', (_label, input) => {
+    expect(profileUpdateSchema.safeParse(input).success).toBe(false);
   });
 });

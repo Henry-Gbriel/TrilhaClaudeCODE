@@ -2,13 +2,13 @@
 begin;
 select plan(7);
 
-insert into auth.users (id, email) values
-  ('00000000-0000-0000-0000-00000000000a', 'ana@example.com'),
-  ('00000000-0000-0000-0000-00000000000b', 'bia@example.com'),
-  ('00000000-0000-0000-0000-00000000000c', 'caio@example.com');
-insert into public.profiles (id, display_name) values
-  ('00000000-0000-0000-0000-00000000000a', 'Ana'),
-  ('00000000-0000-0000-0000-00000000000b', 'Bia');
+-- O trigger on_auth_user_created cria os perfis a partir do full_name.
+insert into auth.users (id, email, raw_user_meta_data) values
+  ('00000000-0000-0000-0000-00000000000a', 'ana@example.com', '{"full_name":"Ana"}'),
+  ('00000000-0000-0000-0000-00000000000b', 'bia@example.com', '{"full_name":"Bia"}'),
+  ('00000000-0000-0000-0000-00000000000c', 'caio@example.com', '{"full_name":"Caio"}');
+-- Caio ainda não tem perfil (simula um perfil apagado), para testar a criação pelo próprio usuário.
+delete from public.profiles where id = '00000000-0000-0000-0000-00000000000c';
 
 set local role anon;
 select is_empty('select * from public.profiles', 'anon não vê perfis');
